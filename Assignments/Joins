@@ -1,0 +1,80 @@
+#1 List the title id, title name, publisher id, and publisher name of all the books.
+SELECT title_id,title_name,p.pub_id,p.pub_name from titles t
+JOIN publishers p on p.pub_id=t.pub_id
+ORDER BY p.pub_id;
+
+#2 List the title id, title name, and primary author of all the books.
+SELECT t.title_id,title_name,au_lname from titles t
+JOIN title_authors ta on ta.title_id=t.title_id
+JOIN authors a on a.au_id=ta.au_id;
+
+#3 Same as #1 except only include the books published in ‘CA’.
+SELECT title_id,title_name,p.pub_id,p.pub_name from titles t
+JOIN publishers p on p.pub_id=t.pub_id
+WHERE state='CA'
+ORDER BY p.pub_id;
+
+#4 List type and number of books published in ‘CA’.
+
+#5 List the count the total of the sales in the empsales table.
+
+#6 Do the same but join the employees table. (Note: You are not using anything from the employee table but this does break it. What do you have to do to fix it, while still using the join?)
+
+#7 List the emp_id, emp_name and sales (include all the records from empsales).
+
+#8 List the emp_id,emp_name and sales (include all the records from employees).
+
+#9 List the emp_id, emp_name and sales (include all the records from empsales and employees).
+
+#10 The Heir table has the emp_id and boss_id stored in it. From the employee table look up each employees and bosses name and display them. If the name is not stored, it is OK to print NULL.
+
+/*1*/
+SELECT t.title_id,t.title_name,p.pub_id,p.pub_name
+FROM titles t, publishers p
+WHERE t.PUB_ID = p.PUB_ID
+ORDER BY p.pub_id;
+/*2*/
+SELECT t.title_id,t.title_name,a.au_lname
+from titles t, authors a, title_authors ta
+WHERE t.title_id=ta.title_id AND a.au_id=ta.au_id
+ORDER BY t.title_id;
+/*3*/
+SELECT t.title_id,t.title_name,p.pub_id,p.pub_name
+from titles t, publishers p
+WHERE p.pub_id=t.pub_id AND state='CA'
+ORDER BY p.pub_id;
+/*4*/
+SELECT t.type, count(t.type)
+from titles t, publishers p
+where p.PUB_ID=t.PUB_ID AND state='CA'
+GROUP BY t.type
+ORDER BY t.type;
+/*5*/
+SELECT count(es.EMP_ID) as "Employees",sum(es.sales) as "Total Sales"
+from empsales es;
+/*6*/
+SELECT count(es.EMP_ID), sum(es.sales)
+from employees e, empsales es
+where e.EMP_ID(+)=es.EMP_ID;
+/*Add a join to fix*/
+/*7*/
+SELECT es.EMP_ID, e.EMP_NAME, es.SALES
+from EMPLOYEES e, EMPSALES es
+where e.EMP_ID(+)=es.EMP_ID
+order by es.EMP_ID;
+/*8*/
+SELECT es.EMP_ID, e.EMP_NAME, es.SALES
+from EMPLOYEES e, EMPSALES es
+where e.EMP_ID=es.EMP_ID(+)
+order by es.EMP_ID;
+/*9*/
+SELECT es.EMP_ID, e.EMP_NAME, es.SALES from EMPLOYEES e
+RIGHT JOIN EMPSALES es ON e.EMP_ID=es.EMP_ID
+order by es.EMP_ID;
+/*10 Working on*/
+SELECT e.EMP_ID, e.EMP_NAME, h.BOSS_ID,
+       (SELECT e.EMP_NAME
+        FROM HIER h, EMPLOYEES e
+        where e.BOSS_ID=h.BOSS_ID AND e.BOSS)
+from HIER h, EMPLOYEES e
+where e.BOSS_ID=h.BOSS_ID(+);
