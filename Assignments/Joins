@@ -71,10 +71,8 @@ order by es.EMP_ID;
 SELECT es.EMP_ID, e.EMP_NAME, es.SALES from EMPLOYEES e
 RIGHT JOIN EMPSALES es ON e.EMP_ID=es.EMP_ID
 order by es.EMP_ID;
-/*10 Working on*/
-SELECT e.EMP_ID, e.EMP_NAME, h.BOSS_ID,
-       (SELECT e.EMP_NAME
-        FROM HIER h, EMPLOYEES e
-        where e.BOSS_ID=h.BOSS_ID AND e.BOSS)
-from HIER h, EMPLOYEES e
-where e.BOSS_ID=h.BOSS_ID(+);
+/*10*/
+SELECT h.EMP_ID, e.EMP_NAME, h.BOSS_ID, he.EMP_NAME
+from HIER h, EMPLOYEES e, EMPLOYEES he
+where h.EMP_ID=e.EMP_ID(+) and h.BOSS_ID=he.emp_ID(+)
+order by h.EMP_ID;
