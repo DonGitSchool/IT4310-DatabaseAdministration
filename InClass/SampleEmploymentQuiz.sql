@@ -34,12 +34,13 @@ FROM Employee
 GROUP BY Department;
 
 /* 7. WAQ to get 3rd highest salary from the Employee table */
-SELECT Salary
+SELECT MIN(salary) AS ThirdHighestSalary
 FROM (
-    SELECT Salary, ROW_NUMBER() OVER (ORDER BY Salary DESC) AS RowNum
+    SELECT salary
     FROM Employee
-) AS RankedSalaries
-WHERE RowNum = 3;
+    ORDER BY salary DESC
+    LIMIT 3
+) AS TopSalaries; --Grabs the Top 3 then gets the lowest of them
 
 /* 8. WAQ to find Employee whose name starts with 's' */
 SELECT *
