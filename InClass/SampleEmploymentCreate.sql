@@ -1,3 +1,6 @@
+/* What i would do if it was my table: Format phone numbers (But maybe the code would do that so that there isnt muck in my db?)
+Make the ID auto increment (Implemented for start at 1) but start at like 0000001 and make it an int of 7 digits
+Make the email a unique key */
 DROP TABLE IF EXISTS State;
 Create table State(Id int, Name varchar(50));
 
