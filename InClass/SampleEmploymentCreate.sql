@@ -1,3 +1,26 @@
+DROP TABLE IF EXISTS State;
+Create table State(Id int, Name varchar(50));
+
+Drop TABLE IF EXISTS City;
+Create table City(Id int, Name varchar(50), StateId int);
+
+Drop TABLE IF EXISTS Employee;
+CREATE TABLE Employee (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Email VARCHAR(100),
+    Mobile VARCHAR(15),
+    Salary DECIMAL(10, 2),
+    Department VARCHAR(50),
+    CityId INT,
+    StateId INT
+); --changed it so it can be run multiple times without error and auto increments 
+
+/* Original creates: 
+Create table State(Id int, Name varchar(50));    
+Create table City(Id int, Name varchar(50), StateId int);
+Create table Employee(Id int, Name varchar(50), Email varchar(50), Mobile varchar(10), Salary decimal(10,2), Department Varchar(50), CityId int , StateId int );
+*/
 --Insert Data into State table---- 
 Insert into State(id, Name) Values(1,'Delhi');
 Insert into State(id, Name) Values(2,'U.P.');

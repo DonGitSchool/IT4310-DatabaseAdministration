@@ -4,7 +4,7 @@ FROM Employee
 WHERE salary < (SELECT MAX(salary) FROM Employee); --This makes it the max but the second most :)
 
 /* 2. WAQ to get details of all employees who are working in 'New Delhi' */
-SELECT e.*
+SELECT e.*, c.Name AS CityName
 FROM Employee e
 JOIN City c ON e.CityId = c.Id
 WHERE c.Name = 'New Delhi';
